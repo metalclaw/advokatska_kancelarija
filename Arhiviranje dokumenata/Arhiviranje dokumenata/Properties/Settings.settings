@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Arhiviranje_dokumenata.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="dropboxAccessToken" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ht9ZUeVrviAAAAAAAAAACmzk7h4BMoohnba5g7jUiWGiwDn7tsM9hx1UH4MCyZXq</Value>
+    </Setting>
+    <Setting Name="databaseServerAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+    <Setting Name="databasePort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">27017</Value>
+    </Setting>
+    <Setting Name="imeKorisnika" Type="System.String" Scope="User">
+      <Value Profile="(Default)">korisnik</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
