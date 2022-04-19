@@ -33,6 +33,7 @@ namespace Arhiviranje_dokumenata
             {
                 ucitajKategorijePredmeta();
                 ucitajListuRadnika();
+                ucitajPrioriteteEvidencija();
             }
 
             parentInstance = instance;
@@ -393,6 +394,70 @@ namespace Arhiviranje_dokumenata
             {
                 GoogleCalendarCommunication.executeBatch();
             }*/
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK) {
+                //selektovan item da menja boju i da se snimi u bazu
+                if (lvPrioriteti.SelectedItems.Count == 1)
+                {
+                    PrioritetiEvidencija prioritet = new PrioritetiEvidencija();
+                    prioritet.prioritet = Convert.ToInt32(lvPrioriteti.SelectedItems[0].Text);
+                    prioritet.boja = GlobalVariables.argbToHex(colorDialog1.Color);
+
+                    DatabaseCommunication.updatePrioritetEvidencije(parentInstance, prioritet);
+                    ucitajPrioriteteEvidencija();
+                }
+            }
+        }
+
+        private void btnDodajNoviPrioritet_Click(object sender, EventArgs e)
+        {
+            PrioritetiEvidencija pe = new PrioritetiEvidencija();
+            pe.prioritet = lvPrioriteti.Items.Count + 1;
+            pe.boja = GlobalVariables.argbToHex(GlobalVariables.evidencija_priority_default);
+            DatabaseCommunication.upisiNovPrioritetEvidencije(parentInstance, pe);
+
+            ucitajPrioriteteEvidencija();
+        }
+
+        private void ucitajPrioriteteEvidencija()
+        {
+            btnPromeniBojuPrioriteta.Enabled = false;
+            btnObrisiPrioritet.Enabled = false;
+            lvPrioriteti.Items.Clear();
+            List<PrioritetiEvidencija> radnici = DatabaseCommunication.getPrioritetiEvidencija();
+
+            foreach (PrioritetiEvidencija item in radnici)
+            {
+                ListViewItem lvi = new ListViewItem();
+                lvi.Text = item.prioritet.ToString();
+                lvi.BackColor = GlobalVariables.stringToColor(item.boja);
+                lvPrioriteti.Items.Add(lvi);
+            }
+        }
+
+        private void lvPrioriteti_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvPrioriteti.SelectedItems.Count == 0)
+            {
+                btnPromeniBojuPrioriteta.Enabled = false;
+                btnObrisiPrioritet.Enabled = false;
+            } else
+            {
+                btnPromeniBojuPrioriteta.Enabled = true;
+                btnObrisiPrioritet.Enabled = true;
+            }
+        }
+
+        private void btnObrisiPrioritet_Click(object sender, EventArgs e)
+        {
+            if (lvPrioriteti.SelectedItems.Count == 1)
+            {
+                DatabaseCommunication.deletePrioritetEvidencije(parentInstance, lvPrioriteti.SelectedItems[0].Text);
+                ucitajPrioriteteEvidencija();
+            }
         }
     }
 }

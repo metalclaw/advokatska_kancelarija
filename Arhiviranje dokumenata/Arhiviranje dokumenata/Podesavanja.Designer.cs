@@ -69,12 +69,20 @@
             this.tbNovaSifra = new System.Windows.Forms.TextBox();
             this.btnPodigniRocistaNaKalendar = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.btnPromeniBojuPrioriteta = new System.Windows.Forms.Button();
+            this.lvPrioriteti = new System.Windows.Forms.ListView();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnDodajNoviPrioritet = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btnObrisiPrioritet = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -173,7 +181,7 @@
             // 
             // btnSnimi
             // 
-            this.btnSnimi.Location = new System.Drawing.Point(109, 341);
+            this.btnSnimi.Location = new System.Drawing.Point(323, 460);
             this.btnSnimi.Name = "btnSnimi";
             this.btnSnimi.Size = new System.Drawing.Size(75, 23);
             this.btnSnimi.TabIndex = 3;
@@ -474,12 +482,77 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Google kalendar";
             // 
+            // btnPromeniBojuPrioriteta
+            // 
+            this.btnPromeniBojuPrioriteta.Location = new System.Drawing.Point(171, 75);
+            this.btnPromeniBojuPrioriteta.Name = "btnPromeniBojuPrioriteta";
+            this.btnPromeniBojuPrioriteta.Size = new System.Drawing.Size(122, 23);
+            this.btnPromeniBojuPrioriteta.TabIndex = 17;
+            this.btnPromeniBojuPrioriteta.Text = "Promeni boju";
+            this.btnPromeniBojuPrioriteta.UseVisualStyleBackColor = true;
+            this.btnPromeniBojuPrioriteta.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lvPrioriteti
+            // 
+            this.lvPrioriteti.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader4});
+            this.lvPrioriteti.FullRowSelect = true;
+            this.lvPrioriteti.GridLines = true;
+            this.lvPrioriteti.HideSelection = false;
+            this.lvPrioriteti.Location = new System.Drawing.Point(9, 19);
+            this.lvPrioriteti.MultiSelect = false;
+            this.lvPrioriteti.Name = "lvPrioriteti";
+            this.lvPrioriteti.Size = new System.Drawing.Size(156, 132);
+            this.lvPrioriteti.TabIndex = 18;
+            this.lvPrioriteti.UseCompatibleStateImageBehavior = false;
+            this.lvPrioriteti.View = System.Windows.Forms.View.Details;
+            this.lvPrioriteti.SelectedIndexChanged += new System.EventHandler(this.lvPrioriteti_SelectedIndexChanged);
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Prioritet";
+            this.columnHeader4.Width = 152;
+            // 
+            // btnDodajNoviPrioritet
+            // 
+            this.btnDodajNoviPrioritet.Location = new System.Drawing.Point(171, 19);
+            this.btnDodajNoviPrioritet.Name = "btnDodajNoviPrioritet";
+            this.btnDodajNoviPrioritet.Size = new System.Drawing.Size(122, 26);
+            this.btnDodajNoviPrioritet.TabIndex = 19;
+            this.btnDodajNoviPrioritet.Text = "Dodaj novi prioritet";
+            this.btnDodajNoviPrioritet.UseVisualStyleBackColor = true;
+            this.btnDodajNoviPrioritet.Click += new System.EventHandler(this.btnDodajNoviPrioritet_Click);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.btnObrisiPrioritet);
+            this.groupBox7.Controls.Add(this.lvPrioriteti);
+            this.groupBox7.Controls.Add(this.btnDodajNoviPrioritet);
+            this.groupBox7.Controls.Add(this.btnPromeniBojuPrioriteta);
+            this.groupBox7.Location = new System.Drawing.Point(12, 332);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(299, 170);
+            this.groupBox7.TabIndex = 20;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Lista prioriteta evidencija";
+            // 
+            // btnObrisiPrioritet
+            // 
+            this.btnObrisiPrioritet.Location = new System.Drawing.Point(171, 128);
+            this.btnObrisiPrioritet.Name = "btnObrisiPrioritet";
+            this.btnObrisiPrioritet.Size = new System.Drawing.Size(122, 23);
+            this.btnObrisiPrioritet.TabIndex = 20;
+            this.btnObrisiPrioritet.Text = "Obriši prioritet";
+            this.btnObrisiPrioritet.UseVisualStyleBackColor = true;
+            this.btnObrisiPrioritet.Click += new System.EventHandler(this.btnObrisiPrioritet_Click);
+            // 
             // Podesavanja
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1011, 376);
+            this.ClientSize = new System.Drawing.Size(1011, 514);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox4);
@@ -509,6 +582,7 @@
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -557,5 +631,12 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnPodigniRocistaNaKalendar;
         private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Button btnPromeniBojuPrioriteta;
+        private System.Windows.Forms.ListView lvPrioriteti;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.Button btnDodajNoviPrioritet;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button btnObrisiPrioritet;
     }
 }

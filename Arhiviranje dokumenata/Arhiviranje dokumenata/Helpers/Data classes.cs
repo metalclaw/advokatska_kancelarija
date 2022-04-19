@@ -199,6 +199,13 @@ namespace Arhiviranje_dokumenata
         public bool placeno { get; set; }
     }
 
+    class PrioritetiEvidencija
+    {
+        public ObjectId id { get; set; }
+        public int prioritet { get; set; }
+        public string boja { get; set; }
+    }
+
     #region db fix helpers
     class DBFixPredmetData
     {

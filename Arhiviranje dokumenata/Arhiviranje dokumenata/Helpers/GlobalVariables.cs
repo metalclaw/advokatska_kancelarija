@@ -186,6 +186,22 @@ namespace Arhiviranje_dokumenata.Helpers
             }
         }
 
+        public static Color stringToColor(string colorStr)
+        {
+            System.ComponentModel.TypeConverter cc = System.ComponentModel.TypeDescriptor.GetConverter(typeof(Color));
+            var result = (Color)cc.ConvertFromString(colorStr);
+            return result;
+        }
+
+        public static string argbToHex(Color color)
+        {
+            return string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}",
+                     color.A,
+                     color.R,
+                     color.G,
+                     color.B);
+        }
+
         #endregion
     }
 }

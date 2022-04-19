@@ -102,6 +102,29 @@ namespace Arhiviranje_dokumenata
 
             GlobalVariables.mongo_is_installed = mongo_is_installed;
 
+            List<PrioritetiEvidencija> prioritetiEvidencija = DatabaseCommunication.getPrioritetiEvidencija();
+            
+            if (prioritetiEvidencija.Count == 0)
+            {
+                PrioritetiEvidencija pe = new PrioritetiEvidencija();
+                pe.prioritet = 1;
+                pe.boja = GlobalVariables.argbToHex(GlobalVariables.evidencija_priority_1);
+                DatabaseCommunication.upisiNovPrioritetEvidencije(this, pe);
+
+                pe.prioritet = 2;
+                pe.boja = GlobalVariables.argbToHex(GlobalVariables.evidencija_priority_2);
+                DatabaseCommunication.upisiNovPrioritetEvidencije(this, pe);
+
+                pe.prioritet = 3;
+                pe.boja = GlobalVariables.argbToHex(GlobalVariables.evidencija_priority_3);
+                DatabaseCommunication.upisiNovPrioritetEvidencije(this, pe);
+
+                pe.prioritet = 4;
+                pe.boja = GlobalVariables.argbToHex(GlobalVariables.evidencija_priority_default);
+                DatabaseCommunication.upisiNovPrioritetEvidencije(this, pe);
+            }
+            
+
             pnlBackup.Visible = false;
 
             timer.Elapsed += async (sender, e) => await refreshList();
@@ -298,6 +321,7 @@ namespace Arhiviranje_dokumenata
 
         private void ubaciDanasnjeEvidencijeUListu(List<ListaDanasnjihEvidencija> listaEvidencija)
         {
+            List<PrioritetiEvidencija> prioritetiEvidencija = DatabaseCommunication.getPrioritetiEvidencija();
             olvEvidencije.ClearObjects();
             //dodaj podatke u listu
             olvEvidencije.SetObjects(listaEvidencija);
@@ -307,22 +331,13 @@ namespace Arhiviranje_dokumenata
             olvEvidencije.FormatRow += (sender, args) =>
             {
                 ListaDanasnjihEvidencija evidencija = (ListaDanasnjihEvidencija)args.Model;
-
-                switch (evidencija.prioritet)
+                PrioritetiEvidencija pe = prioritetiEvidencija.Find(p => p.prioritet == evidencija.prioritet); ;
+                
+                if (pe != null)
                 {
-                    case 1:
-                        args.Item.BackColor = GlobalVariables.evidencija_priority_1;
-                        break;
-                    case 2:
-                        args.Item.BackColor = GlobalVariables.evidencija_priority_2;
-                        break;
-                    case 3:
-                        args.Item.BackColor = GlobalVariables.evidencija_priority_3;
-                        break;
-                    default:
-                        args.Item.BackColor = GlobalVariables.evidencija_priority_default;
-                        break;
+                    args.Item.BackColor = GlobalVariables.stringToColor(pe.boja);
                 }
+                
             };
 
             //sortiraj po prioritetu

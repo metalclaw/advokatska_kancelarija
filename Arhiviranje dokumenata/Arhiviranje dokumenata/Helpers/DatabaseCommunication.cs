@@ -23,6 +23,8 @@ namespace Arhiviranje_dokumenata.Helpers
         private static IMongoCollection<BsonDocument> kategorijePredmetaCollection = database.GetCollection<BsonDocument>("kategorije_predmeta");
         private static IMongoCollection<BsonDocument> radniciCollection = database.GetCollection<BsonDocument>("radnici");
         private static IMongoCollection<BsonDocument> sifreCollection = database.GetCollection<BsonDocument>("sifre");
+        private static IMongoCollection<BsonDocument> prioritetiEvidencijaCollection = database.GetCollection<BsonDocument>("prioritet_evidencija");
+        
 
         private static int dbPingWaitLength = 4000;//ms
 
@@ -116,6 +118,21 @@ namespace Arhiviranje_dokumenata.Helpers
             }
             
             return output;
+        }
+
+        public static List<PrioritetiEvidencija> getPrioritetiEvidencija() {
+            updatePrioritetiEvidencijaCollection();
+            List<PrioritetiEvidencija> result = new List<PrioritetiEvidencija>();
+            FilterDefinition<BsonDocument> filter = Builders<BsonDocument>.Filter.Empty;
+
+            List<BsonDocument> results = prioritetiEvidencijaCollection.Find(filter).Sort(Builders<BsonDocument>.Sort.Ascending("prioritet")).ToList();
+
+            foreach (BsonDocument doc in results)
+            {
+                result.Add(BsonSerializer.Deserialize<PrioritetiEvidencija>(doc));
+            }
+
+            return result;
         }
 
         public static List<PredmetData> getPredmetiByBrojPredmeta(string brojPredmeta)
@@ -698,6 +715,31 @@ namespace Arhiviranje_dokumenata.Helpers
         #endregion
 
         #region upis u bazu
+
+        public static bool upisiNovPrioritetEvidencije(Form1 parent, PrioritetiEvidencija prioritet)
+        {
+            updatePrioritetiEvidencijaCollection();
+
+            bool success = true;
+
+            try
+            {
+               BsonDocument spakovano = new BsonDocument {
+                    { "prioritet", prioritet.prioritet },
+                    { "boja", prioritet.boja},
+                };
+
+                prioritetiEvidencijaCollection.InsertOne(spakovano);
+            }
+            catch (Exception e)
+            {
+                success = false;
+                parent.showMessage("Došlo je do greške pri upisivanju novog prioriteta evidencija u bazu: " + e.Message);
+            }
+
+            return success;
+        }
+
         public static bool upisiNoviPredmetUBazu(Form1 parent, PredmetData podaciPredmeta) {
             updateCollection();
             bool success = true;
@@ -804,6 +846,20 @@ namespace Arhiviranje_dokumenata.Helpers
         #endregion
 
         #region brisanje iz baze
+        public static void deletePrioritetEvidencije(Form1 parent, string prioritet)
+        {
+            updatePrioritetiEvidencijaCollection();
+            try
+            {
+                prioritetiEvidencijaCollection.DeleteOne(new BsonDocument("prioritet", Convert.ToInt32(prioritet)));
+                parent.showMessage("Prioritet evidencije je uspešno obrisan!");
+            }
+            catch (Exception e)
+            {
+                parent.showMessage("Došlo je do greške pri brisanju prioriteta evidencije: " + e.Message);
+            }
+        }
+
         public static void deletePredmet(Form1 parent, ObjectId _id) {
             updateCollection();
             try
@@ -873,6 +929,29 @@ namespace Arhiviranje_dokumenata.Helpers
 
         private static void updateCollection() {
             collection = database.GetCollection<BsonDocument>("predmet");
+        }
+
+        private static void updatePrioritetiEvidencijaCollection()
+        {
+            prioritetiEvidencijaCollection = database.GetCollection<BsonDocument>("prioriteti_evidencija");
+        }
+
+        public static void updatePrioritetEvidencije(Form1 parent, PrioritetiEvidencija prioritetEvidencija)
+        {
+            updatePrioritetiEvidencijaCollection();
+            try
+            {
+                BsonDocument newDoc = new BsonDocument {
+                        { "prioritet", prioritetEvidencija.prioritet },
+                        { "boja", prioritetEvidencija.boja},
+                };
+                FilterDefinition<BsonDocument> filter = Builders<BsonDocument>.Filter.Eq("prioritet", prioritetEvidencija.prioritet);
+                var res = prioritetiEvidencijaCollection.ReplaceOne(filter, newDoc);
+            }
+            catch (Exception e)
+            {
+                parent.showMessage("Došlo je do greške pri izmeni prioriteta evidencija: " + e.Message);
+            }
         }
 
         public static void updateDnevneBeleske(Form1 parent, string textBeleske, bool zakljucaj, string ime) {
