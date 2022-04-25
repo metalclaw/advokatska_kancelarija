@@ -22,6 +22,7 @@ namespace Arhiviranje_dokumenata
         private int checkPrint = 0;
         private List<Finansije> finansije;
         bool skipGoogleCalendarUpdates = false;
+        List<PrioritetiEvidencija> prioriteti;
 
         public Predmet(int brojPredmetaBr, int brojPredmetaGod, Form1 mainFormInstance)
         {
@@ -32,12 +33,7 @@ namespace Arhiviranje_dokumenata
 
             BackColor = GlobalVariables.background_color;
 
-            comboBox1.Items.Add("1");
-            comboBox1.Items.Add("2");
-            comboBox1.Items.Add("3");
-            comboBox1.Items.Add("4");
-
-            comboBox1.SelectedItem = "4";
+            fillPrioritetEvidencijaBox();
 
             btnIzmeniEvidenciju.Enabled = false;
             btnObrisiEvidenciju.Enabled = false;
@@ -83,6 +79,20 @@ namespace Arhiviranje_dokumenata
                     popuniPodatkePredmeta(DatabaseCommunication.getPredmetByBrojPredmeta(brojPredmetaBr, brojPredmetaGod));
                 }
             }
+        }
+
+        private void fillPrioritetEvidencijaBox()
+        {
+            prioriteti = DatabaseCommunication.getPrioritetiEvidencija();
+
+            comboBox1.Items.Clear();
+
+            foreach (PrioritetiEvidencija prioritet in prioriteti)
+            {
+                comboBox1.Items.Add(prioritet.prioritet.ToString()); 
+                comboBox1.SelectedItem = prioritet.prioritet.ToString();
+            }
+
         }
 
         private void upisiNoviBrojPredmeta()
@@ -679,14 +689,16 @@ namespace Arhiviranje_dokumenata
                 predmetChanged = true;
         }
 
-        private Color getPriorityColor(string priority) {           
-            switch (priority) {
-                case "1": return GlobalVariables.evidencija_priority_1;
-                case "2": return GlobalVariables.evidencija_priority_2;
-                case "3": return GlobalVariables.evidencija_priority_3;
-                case "4": return GlobalVariables.evidencija_priority_default;
-                default: return GlobalVariables.evidencija_priority_default;
+        private Color getPriorityColor(string priority) {
+            PrioritetiEvidencija selectedPrioritet = prioriteti.Find(p => p.prioritet.ToString() == priority);
+
+            if (selectedPrioritet != null)
+            {
+                return GlobalVariables.stringToColor(selectedPrioritet.boja);
+            } else {
+                MessageBox.Show("Nije pronađen odabrani prioritet!");
             }
+            return GlobalVariables.evidencija_priority_default;
         }
 
         private void btnDanasnjiDatum_Click(object sender, EventArgs e)

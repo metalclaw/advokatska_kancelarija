@@ -559,9 +559,9 @@
             // btnMenjajBeleske
             // 
             this.btnMenjajBeleske.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMenjajBeleske.Location = new System.Drawing.Point(1236, 387);
+            this.btnMenjajBeleske.Location = new System.Drawing.Point(1236, 374);
             this.btnMenjajBeleske.Name = "btnMenjajBeleske";
-            this.btnMenjajBeleske.Size = new System.Drawing.Size(102, 23);
+            this.btnMenjajBeleske.Size = new System.Drawing.Size(102, 36);
             this.btnMenjajBeleske.TabIndex = 38;
             this.btnMenjajBeleske.Text = "Izmeni beleške";
             this.btnMenjajBeleske.UseVisualStyleBackColor = true;

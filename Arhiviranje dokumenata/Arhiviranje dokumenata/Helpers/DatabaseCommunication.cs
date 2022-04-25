@@ -981,9 +981,9 @@ namespace Arhiviranje_dokumenata.Helpers
                     FilterDefinition<BsonDocument> filter = Builders<BsonDocument>.Filter.Eq("_id", oldBeleska.Id);
                     var res = beleskeCollection.ReplaceOne(filter, newDoc);
 
-                    if (!zakljucaj && res.IsAcknowledged && res.ModifiedCount > 0) {
+                   /* if (!zakljucaj && res.IsAcknowledged && res.ModifiedCount > 0) {
                         parent.showMessage("Dnevne beleške otključane!");
-                    }
+                    }*/
                 }
             }
             catch (Exception e)

@@ -706,7 +706,7 @@ namespace Arhiviranje_dokumenata
                                 lblBeleskeZakljucano.Visible = false;
                                 lblBeleskeZakljucao.Visible = false;
                             }
-                            btnMenjajBeleske.Text = "Izmeni beleške";
+                            btnMenjajBeleske.Text = "Beleške su zaključane";
                         }
                     }
                     catch (Exception e)
@@ -1145,7 +1145,7 @@ namespace Arhiviranje_dokumenata
 
                     DatabaseCommunication.upisiDnevneBeleskeUBazu(this, tbBeleske.Rtf, true, imeKorisnika);
 
-                    btnMenjajBeleske.Text = "Snimi izmene";
+                    btnMenjajBeleske.Text = "Beleške su otključane";
                 }
             }
             else {
